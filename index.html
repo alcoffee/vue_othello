@@ -30,7 +30,7 @@
         <table class="table-dark table-bordered float-left">
             <tbody>
                 <tr v-for="(line, i) in board">
-                    <td v-for="(row, j) in line" v-on:click="putStone(i, j)">
+                    <td v-for="(row, j) in line" v-on:click="putStone(i, j)" width="25">
                         <div class="text-center">
                             {{ getBoard(i,j) }}
                         </div>
@@ -46,7 +46,7 @@
         <div class="clearfix divider py-1 bg-danger"> <hr> </div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
-            <p> debug: {{ debug }} </p>
+            <p> witch_is_turn: {{ witch_is_turn }} </p>
             <p> board: {{ board }} </p>
             <p> getBoard(0, 0): {{ getBoard(0, 0) }} </p>
         </dev>

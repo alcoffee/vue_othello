@@ -19,7 +19,6 @@ new Vue({
         witch_is_turn: false, // falseが黒のターン, trueが白のターン
         debug: false,
     },
-    // https://dev83.com/vue-computed-methods/
     // キャメルケース、重めの処理やdataの書き換えに使う
     methods:
     {
