@@ -30,9 +30,9 @@
         <table class="table-dark table-bordered float-left">
             <tbody>
                 <tr v-for="(line, i) in board">
-                    <td v-for="(row, j) in line" v-on:click="putStone(i, j)" width="25">
+                    <td v-for="(cell, j) in line" v-on:click="putStone(i, j)" width="25">
                         <div class="text-center">
-                            {{ getBoard(i,j) }}
+                            {{ printBoard(i,j) }}
                         </div>
                     </td>
                 </tr>
@@ -46,9 +46,19 @@
         <div class="clearfix divider py-1 bg-danger"> <hr> </div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
-            <p> witchIsTurn: {{ witchIsTurn }} </p>
+            <p> turn: {{ turn }} </p>
             <p> board: {{ board }} </p>
-            <p> getBoard(0, 0): {{ getBoard(0, 0) }} </p>
+            <p> history: {{ history }}</p>
+            <p> printBoard(0, 0): {{ printBoard(0, 0) }} </p>
+            <p>[
+                <dev v-for="(line, i) in board">
+                    <dev v-for="(cell, j) in board">
+                        {{ evaluationStealNumber(i, j) }}, 
+                    </dev>
+                    <br>
+                </dev>
+                ]
+            </p>
         </dev>
     </div>
     <script src="./vue_othello.js"></script>
