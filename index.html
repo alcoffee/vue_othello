@@ -14,31 +14,41 @@
         table {
             cursor: default;
             font-family: 'ＭＳ Ｐゴシック';
+            font-weight: bold;
         }
-        ::selection {
-            background: rgba(0, 0, 0, 0);
-            color: rgb(0, 0, 0);
-        }
+        div > table ::selection {
+                background: rgba(255, 255, 255, 0);
+                color: rgb(255, 255, 255);
+            }
+        td:hover {
+                background-color: rgb(138, 138, 138);
+            }
     </style>
 </head>
 <body>
     <div id="app-othello" v-cloak>
-        <table border="1" >
+        <table class="table-dark table-bordered float-left">
             <tbody>
                 <tr v-for="(line, i) in board">
                     <td v-for="(row, j) in line" v-on:click="putStone(i, j)">
-                        <div>
+                        <div class="text-center">
                             {{ getBoard(i,j) }}
                         </div>
                     </td>
                 </tr>
             </tbody>
         </table>
+
+        <div class="divider py-1 bg-primary"></div>
+        <p> float-leftテスト文字 </p>
+        <p> float-leftテスト文字 </p>
+        <p> float-leftテスト文字 </p>
+        <div class="clearfix divider py-1 bg-danger"> <hr> </div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
             <p> debug: {{ debug }} </p>
             <p> board: {{ board }} </p>
-            <p> getBoard: {{ getBoard(0, 0) }} </p>
+            <p> getBoard(0, 0): {{ getBoard(0, 0) }} </p>
         </dev>
     </div>
     <script src="./vue_othello.js"></script>

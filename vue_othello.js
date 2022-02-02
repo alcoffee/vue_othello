@@ -37,13 +37,15 @@ new Vue({
         },
         putStone: function(line, row)
         {
-            if (false === this.witch_is_turn) {
-                // this.board[line][row] = '○';
-                this.$set(this.board[line], row, stone_chars['black']);
-            } else {
-                this.$set(this.board[line], row, stone_chars['white']);
+            if ('' === this.board[line][row]) {
+                if (false === this.witch_is_turn) {
+                    // this.board[line][row] = '○';
+                    this.$set(this.board[line], row, stone_chars['black']);
+                } else {
+                    this.$set(this.board[line], row, stone_chars['white']);
+                }
+                this.witch_is_turn = !this.witch_is_turn;
             }
-            this.witch_is_turn = !this.witch_is_turn;
         },
-    },
+    }
 })
