@@ -1,6 +1,6 @@
-const stone_chars = {'black': '●', 'white': '○'};
-const b = stone_chars['black'];
-const w = stone_chars['white'];
+const STONE_CHARS = {'black': '●', 'white': '○'};
+const B = STONE_CHARS['black'];
+const W = STONE_CHARS['white'];
 
 new Vue({
     el: '#app-othello',
@@ -10,14 +10,15 @@ new Vue({
             [ '', '', '', '', '', '', '',''],
             [ '', '', '', '', '', '', '',''],
             [ '', '', '', '', '', '', '',''],
-            [ '', '', '', b, w, '', '',''],
-            [ '', '', '', w, b, '', '',''],
+            [ '', '', '', B, W, '', '',''],
+            [ '', '', '', W, B, '', '',''],
             [ '', '', '', '', '', '', '',''],
             [ '', '', '', '', '', '', '',''],
             [ '', '', '', '', '', '', '',''],
         ],
-        witch_is_turn: false, // falseが黒のターン, trueが白のターン
+        witchIsTurn: false, // falseが黒のターン, trueが白のターン
         debug: false,
+        putedHistory: [],
     },
     // キャメルケース、重めの処理やdataの書き換えに使う
     methods:
@@ -31,19 +32,19 @@ new Vue({
             if (this.board[line][row]) {
                 return this.board[line][row];
             } else {
-                return '　　';
+                return '　';
             }
         },
         putStone: function(line, row)
         {
             if ('' === this.board[line][row]) {
-                if (false === this.witch_is_turn) {
+                if (false === this.witchIsTurn) {
                     // this.board[line][row] = '○';
-                    this.$set(this.board[line], row, stone_chars['black']);
+                    this.$set(this.board[line], row, STONE_CHARS['black']);
                 } else {
-                    this.$set(this.board[line], row, stone_chars['white']);
+                    this.$set(this.board[line], row, STONE_CHARS['white']);
                 }
-                this.witch_is_turn = !this.witch_is_turn;
+                this.witchIsTurn = !this.witchIsTurn;
             }
         },
     }
