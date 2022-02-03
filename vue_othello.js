@@ -43,8 +43,9 @@ new Vue({
         },
         userInput: function(y, x) {
             if (this.auto) {
-                this.putStone(y, x);
-                this.putRandPosition();
+                if (this.putStone(y, x)) {
+                    this.putRandPosition();
+                };
             } else {
                 this.putStone(y, x);
             }
@@ -61,6 +62,9 @@ new Vue({
                 }
                 this.turn = !this.turn;
                 this.history.push({y, x});
+                return true;
+            } else {
+                return false;
             }
         },
         /**
