@@ -58,6 +58,7 @@
         <div class="clearfix divider py-1 bg-danger"></div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
+            <p> <button v-on:click="putRandPosition"> ランダムな場所に置く </button> </p>
             <p> turn: {{ turn }} </p>
             <p> whichIsTurn: {{ whichIsTurn(turn) }}</p>
             <p> board: {{ board }} </p>

@@ -44,8 +44,10 @@ new Vue({
         {
             if (this.countEightDirections(y, x) > 0) {
                 if (false === this.turn) {
+                    this.reverseEightDirections(y, x);
                     this.$set(this.board[y], x, STONE_CHARS['black']);
                 } else {
+                    this.reverseEightDirections(y, x);
                     this.$set(this.board[y], x, STONE_CHARS['white']);
                 }
                 this.turn = !this.turn;
@@ -133,6 +135,71 @@ new Vue({
             }
         },
         /**
+         * 石を置いたときに、裏返す処理の部分
+         * 8方向にreverseArrow()関数を実行している
+         * ただし、すでに石が置いてあったら終了
+         * 
+         * @param {int} y 
+         * @param {int} x 
+         * @returns {int}
+         */
+        reverseEightDirections: function(y, x) {
+            if ('' === this.board[y][x]) {
+                for (let i=-1; i<=1; i++) {
+                    for (let j=-1; j<=1; j++) {
+                        if (0 === i) {
+                            if (0 === j) {
+                                continue;
+                            }
+                        }
+                        this.reverseArrow(y, x, i, j);
+                    }
+                }
+                return true;
+            }
+            return false;
+        },
+        /**
+         * 置く場所と方向を入力してその方向に、
+         * 実際に石を裏返していく
+         * 
+         * @param {int} y
+         * @param {int} x
+         * @param {int} y_direction
+         * @param {int} x_direction
+         * @returns {int}
+         */
+        reverseArrow: function(y, x, y_direction, x_direction) {
+            let board_temp = this.board.concat();
+            let allyColor = this.whichIsTurn(this.turn);
+            let y_check = y + y_direction;
+            let x_check = x + x_direction;
+            if (Math.abs(y_direction) > 1) {
+                return false;
+            }
+            if (Math.abs(x_direction) > 1) {
+                return false;
+            }
+
+            while (true) {
+                if (y_check >= 8 || y_check < 0 ||
+                        x_check >= 8 || x_check < 0) {
+                    return false;
+                }
+                if (allyColor === this.board[y_check][x_check]) {
+                    this.board = board_temp;
+                    return true;
+                } else if ('' === this.board[y_check][x_check]) {
+                    return false;
+                } else {
+                    board_temp[y_check][x_check] = this.whichIsTurn(this.turn);
+                    y_check += y_direction;
+                    x_check += x_direction;
+                    continue;
+                }
+            }
+        },
+        /**
          * ランダムな場所に置く
          */
         putRandPosition: function() {
@@ -159,6 +226,6 @@ new Vue({
          */
         returnRndValue: function(value) {
             return Math.floor(Math.random() * value);
-        }
+        },
     },
 })
