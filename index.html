@@ -12,6 +12,7 @@
             display: none;
         }
         table {
+            margin: 5px;
             cursor: default;
             font-family: 'ＭＳ Ｐゴシック';
             font-weight: bold;
@@ -32,7 +33,7 @@
                 <tr v-for="(line, i) in board">
                     <td v-for="(cell, j) in line" v-on:click="putStone(i, j)" width="25">
                         <div class="text-center">
-                            {{ printBoard(i,j) }}
+                            {{ printCell(i,j) }}
                         </div>
                     </td>
                 </tr>
@@ -40,25 +41,31 @@
         </table>
 
         <div class="divider py-1 bg-primary"></div>
-        <p> float-leftテス </p>
-        <p> float-leftテスト文 </p>
+        <p>
+            <span v-if="turn">
+                白
+            </span>
+            <span v-else>
+                黒
+            </span>
+            <span style="font-family: 'ＭＳ Ｐゴシック';">
+                {{ whichIsTurn(turn) }}
+            </span>
+            の手番です
+        </p>
+        <button v-on:click="putRandPosition"> ランダムな場所に置く </button>
         <p> float-leftテスト文字 </p>
-        <div class="clearfix divider py-1 bg-danger"> <hr> </div>
+        <div class="clearfix divider py-1 bg-danger"></div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
             <p> turn: {{ turn }} </p>
+            <p> whichIsTurn: {{ whichIsTurn(turn) }}</p>
             <p> board: {{ board }} </p>
             <p> history: {{ history }}</p>
-            <p> printBoard(0, 0): {{ printBoard(0, 0) }} </p>
-            <p>[
-                <dev v-for="(line, i) in board">
-                    <dev v-for="(cell, j) in board">
-                        {{ evaluationStealNumber(i, j) }}, 
-                    </dev>
-                    <br>
-                </dev>
-                ]
-            </p>
+            <p> printCell(0, 0): {{ printCell(0, 0) }} </p>
+            <p> countArrow(2, 4, 1, 0): {{ countArrow(2, 4, 1, 0) }}</p>
+            <p> countEightDirections(2, 4): {{ countEightDirections(2, 4) }}</p>
+            <p> putAbleCoord(): {{ putAbleCoord() }}</p>
         </dev>
     </div>
     <script src="./vue_othello.js"></script>
