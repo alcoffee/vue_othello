@@ -20,6 +20,7 @@ new Vue({
         history: [],
         turn: false, // falseが黒のターン, trueが白のターン
         debug: false,
+        auto: true,
     },
     // キャメルケース、dataの書き換えに使う
     methods:
@@ -38,6 +39,14 @@ new Vue({
                 } else {
                     return '・';
                 }
+            }
+        },
+        userInput: function(y, x) {
+            if (this.auto) {
+                this.putStone(y, x);
+                this.putRandPosition();
+            } else {
+                this.putStone(y, x);
             }
         },
         putStone: function(y, x)
@@ -76,7 +85,7 @@ new Vue({
          * 
          * @param {int} y 
          * @param {int} x 
-         * @returns int
+         * @returns {int}
          */
         countEightDirections: function(y, x) {
             let count_value = 0;
@@ -152,7 +161,8 @@ new Vue({
                                 continue;
                             }
                         }
-                        this.reverseArrow(y, x, i, j);
+                        if (this.reverseArrow(y, x, i, j)) {
+                        };
                     }
                 }
                 return true;
@@ -170,7 +180,7 @@ new Vue({
          * @returns {int}
          */
         reverseArrow: function(y, x, y_direction, x_direction) {
-            let board_temp = this.board.concat();
+            let board_temp = return2DConcat(this.board);
             let allyColor = this.whichIsTurn(this.turn);
             let y_check = y + y_direction;
             let x_check = x + x_direction;
@@ -192,7 +202,7 @@ new Vue({
                 } else if ('' === this.board[y_check][x_check]) {
                     return false;
                 } else {
-                    board_temp[y_check][x_check] = this.whichIsTurn(this.turn);
+                    board_temp[y_check][x_check] = allyColor;
                     y_check += y_direction;
                     x_check += x_direction;
                     continue;
@@ -204,7 +214,7 @@ new Vue({
          */
         putRandPosition: function() {
             let array = this.putAbleCoord();
-            let randomPosition = this.returnRndValue(array.length);
+            let randomPosition = returnRndValue(array.length);
             this.putStone(array[randomPosition].x, array[randomPosition].y);
         },
         /**
@@ -222,10 +232,40 @@ new Vue({
             return return_array;
         },
         /**
-         * numまでのランダムな値を返す
+         * その石の色すべての座標の列挙し、配列にして返す
          */
-        returnRndValue: function(value) {
-            return Math.floor(Math.random() * value);
+        stoneCoord: function(color) {
+            let return_array = [];
+            for (let i=0; i<=7; i++) {
+                for (let j=0; j<=7; j++) {
+                    if (color === this.board[i][j]) {
+                        return_array.push({x:i,y:j});
+                    }
+                }
+            }
+            return return_array;
         },
     },
 })
+
+
+/**
+ * numまでのランダムな値を返す
+ */
+function returnRndValue(value)
+{
+    return Math.floor(Math.random() * value);
+}
+
+/**
+ * 2次元配列を複製し複製元に影響が出ないように
+ * 返す
+ */
+function return2DConcat(array)
+{
+    let array_copy = [];
+    for (let i=0; i<array.length; i++) {
+        array_copy.push(array[i].concat());
+    }
+    return array_copy;
+}
