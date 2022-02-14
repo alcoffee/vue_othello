@@ -218,8 +218,10 @@ new Vue({
          */
         putRandPosition: function() {
             let array = this.putAblePosition();
-            let randomPosition = returnRndValue(array.length);
-            this.putStone(array[randomPosition].x, array[randomPosition].y);
+            if (array.length > 0) {
+                let randomPosition = returnRndValue(array.length);
+                this.putStone(array[randomPosition].x, array[randomPosition].y);
+            }
         },
         /**
          * 現在置くことが出来るすべての座標の列挙し、配列にして返す
