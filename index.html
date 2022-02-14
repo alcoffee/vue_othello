@@ -66,23 +66,23 @@
                 黒 <span style="font-family: 'ＭＳ Ｐゴシック';">
                     {{ whichIsTurn(false) }}
                 </span>
-                ： {{ stoneCoord(whichIsTurn(false)).length }} 個
+                ： {{ stonePosition(whichIsTurn(false)).length }} 個
             </p>
             <p>
                 白 <span style="font-family: 'ＭＳ Ｐゴシック';">
                     {{ whichIsTurn(true) }}
                 </span>
-                ： {{ stoneCoord(whichIsTurn(true)).length }} 個
+                ： {{ stonePosition(whichIsTurn(true)).length }} 個
             </p>
-            <p v-if="0 === putAbleCoord().length"> ＝＝＝終了！！＝＝＝ </p>
+            <p v-if="0 === putAblePosition().length"> ＝＝＝終了！！＝＝＝ </p>
             <p v-else> </p>
         </div>
         <div class="clearfix divider py-1 bg-*"></div>
         <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
         <dev v-if="debug">
             <p> <button v-on:click="putRandPosition"> ランダムな場所に置く </button> </p>
-            <p> stoneCoord(whichIsTurn(false)).length: {{ stoneCoord(whichIsTurn(false)).length }}</p>
-            <p> stoneCoord(whichIsTurn(true)).length: {{ stoneCoord(whichIsTurn(true)).length }}</p>
+            <p> stonePosition(whichIsTurn(false)).length: {{ stonePosition(whichIsTurn(false)).length }}</p>
+            <p> stonePosition(whichIsTurn(true)).length: {{ stonePosition(whichIsTurn(true)).length }}</p>
             <p> turn: {{ turn }} </p>
             <p> whichIsTurn: {{ whichIsTurn(turn) }}</p>
             <p> board: {{ board }} </p>
@@ -90,7 +90,7 @@
             <p> printCell(0, 0): {{ printCell(0, 0) }} </p>
             <p> countArrow(2, 4, 1, 0): {{ countArrow(2, 4, 1, 0) }}</p>
             <p> countEightDirections(2, 4): {{ countEightDirections(2, 4) }}</p>
-            <p> putAbleCoord(): {{ putAbleCoord() }}</p>
+            <p> putAblePosition(): {{ putAblePosition() }}</p>
         </dev>
     </div>
     <script src="./vue_othello.js"></script>
