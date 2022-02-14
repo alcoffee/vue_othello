@@ -17,10 +17,10 @@
             font-family: 'ＭＳ Ｐゴシック';
             font-weight: bold;
         }
-        div > table ::selection {
-                background: rgba(255, 255, 255, 0);
-                color: rgb(255, 255, 255);
-            }
+        p {
+            font-family: 'ＭＳ Ｐゴシック';
+            font-weight: bold;
+        }
         td:hover {
                 background-color: rgb(138, 138, 138);
             }
@@ -31,10 +31,15 @@
         <table class="table-dark table-bordered float-left">
             <tbody>
                 <tr v-for="(line, i) in board">
-                    <td v-for="(cell, j) in line" v-on:click="userInput(i, j)" width="25">
-                        <div class="text-center">
+                    <td class="text-center" v-for="(cell, j) in line" v-on:click="userInput(i, j)" width="25">
+                        <span class="text-warning" 
+                            v-if="JSON.stringify({y:i, x:j}) === JSON.stringify(getLastPosition(0)) 
+                            && auto">
                             {{ printCell(i,j) }}
-                        </div>
+                        </span>
+                        <span v-else>
+                            {{ printCell(i,j) }}
+                        </span>
                     </td>
                 </tr>
             </tbody>
@@ -42,7 +47,7 @@
 
         <div class="divider py-1 bg-*"></div>
         
-        <div class="container bg-secondary text-white" style="margin-left: +210px;">
+        <div class="container bg-secondary text-white flex-fill " style="padding-left: +210px">
             <p></p>
             <p>
                 <span v-if="turn">
@@ -51,38 +56,35 @@
                 <span v-else>
                     黒
                 </span>
-                <span style="font-family: 'ＭＳ Ｐゴシック';">
-                    {{ whichIsTurn(turn) }}
-                </span>
-                の手番です
+                {{ whichIsTurn(turn) }} の手番です
             </p>
             <p>
                 <div class="custom-control custom-switch py-1" >
                     <input type="checkbox" class="custom-control-input" id="customSwitch1" v-model="auto">
-                    <label class="custom-control-label" for="customSwitch1"> 相手自動化 </label>
+                    <label class="custom-control-label" for="customSwitch1">
+                        <span v-bind:class=auto?"text-warning":"">
+                        相手自動化
+                        </span>
+                    </label>
                 </div>
             </p>
             <p>
-                黒 <span style="font-family: 'ＭＳ Ｐゴシック';">
-                    {{ whichIsTurn(false) }}
-                </span>
-                ： {{ stoneCoord(whichIsTurn(false)).length }} 個
+                黒 {{ whichIsTurn(false) }}
+                ： {{ stonePosition(whichIsTurn(false)).length }} 個
             </p>
             <p>
-                白 <span style="font-family: 'ＭＳ Ｐゴシック';">
-                    {{ whichIsTurn(true) }}
-                </span>
-                ： {{ stoneCoord(whichIsTurn(true)).length }} 個
+                白 {{ whichIsTurn(true) }}
+                ： {{ stonePosition(whichIsTurn(true)).length }} 個
             </p>
-            <p v-if="0 === putAbleCoord().length"> ＝＝＝終了！！＝＝＝ </p>
+            <p v-if="0 === putAblePosition().length"> ＝＝＝終了！！＝＝＝ </p>
             <p v-else> </p>
         </div>
         <div class="clearfix divider py-1 bg-*"></div>
-        <butoon class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</butoon>
-        <dev v-if="debug">
+        <button class="btn btn-danger m-1" v-on:click="debugChange(1)">デバッグ</button>
+        <div v-if="debug">
             <p> <button v-on:click="putRandPosition"> ランダムな場所に置く </button> </p>
-            <p> stoneCoord(whichIsTurn(false)).length: {{ stoneCoord(whichIsTurn(false)).length }}</p>
-            <p> stoneCoord(whichIsTurn(true)).length: {{ stoneCoord(whichIsTurn(true)).length }}</p>
+            <p> stonePosition(whichIsTurn(false)).length: {{ stonePosition(whichIsTurn(false)).length }}</p>
+            <p> stonePosition(whichIsTurn(true)).length: {{ stonePosition(whichIsTurn(true)).length }}</p>
             <p> turn: {{ turn }} </p>
             <p> whichIsTurn: {{ whichIsTurn(turn) }}</p>
             <p> board: {{ board }} </p>
@@ -90,8 +92,10 @@
             <p> printCell(0, 0): {{ printCell(0, 0) }} </p>
             <p> countArrow(2, 4, 1, 0): {{ countArrow(2, 4, 1, 0) }}</p>
             <p> countEightDirections(2, 4): {{ countEightDirections(2, 4) }}</p>
-            <p> putAbleCoord(): {{ putAbleCoord() }}</p>
-        </dev>
+            <p> putAblePosition(): {{ putAblePosition() }}</p>
+            <p> getLastPosition(): {{ getLastPosition() }}</p>
+            <p> getLastPosition(): {{ getLastPosition(-1) }}</p>
+        </div>
     </div>
     <script src="./vue_othello.js"></script>
 </body>

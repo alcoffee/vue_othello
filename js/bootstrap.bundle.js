@@ -2107,7 +2107,7 @@
    * @param {number} padding
    * @param {HTMLElement} boundariesElement - Element used to define the boundaries
    * @param {Boolean} fixedPosition - Is in fixed position mode
-   * @returns {Object} Coordinates of the boundaries
+   * @returns {Object} Positioninates of the boundaries
    */
   function getBoundaries(popper, reference, padding, boundariesElement) {
     var fixedPosition = arguments.length > 4 && arguments[4] !== undefined ? arguments[4] : false;

@@ -217,14 +217,16 @@ new Vue({
          * ランダムな場所に置く
          */
         putRandPosition: function() {
-            let array = this.putAbleCoord();
-            let randomPosition = returnRndValue(array.length);
-            this.putStone(array[randomPosition].x, array[randomPosition].y);
+            let array = this.putAblePosition();
+            if (array.length > 0) {
+                let randomPosition = returnRndValue(array.length);
+                this.putStone(array[randomPosition].x, array[randomPosition].y);
+            }
         },
         /**
          * 現在置くことが出来るすべての座標の列挙し、配列にして返す
          */
-        putAbleCoord: function() {
+        putAblePosition: function() {
             let return_array = [];
             for (let i=0; i<=7; i++) {
                 for (let j=0; j<=7; j++) {
@@ -238,7 +240,7 @@ new Vue({
         /**
          * その石の色すべての座標の列挙し、配列にして返す
          */
-        stoneCoord: function(color) {
+        stonePosition: function(color) {
             let return_array = [];
             for (let i=0; i<=7; i++) {
                 for (let j=0; j<=7; j++) {
@@ -249,6 +251,21 @@ new Vue({
             }
             return return_array;
         },
+        /**
+         * 最後に置かれた石の位置を返す
+         */
+        getLastPosition: function(value) {
+            let num = 0;
+            if (value) {
+                num = num - value;
+            }
+            let len = this.history.length - num;
+            if (len < 1) {
+                return {y:-1, x:-1};
+            } else {
+                return this.history[len-1];
+            }
+        }
     },
 })
 
