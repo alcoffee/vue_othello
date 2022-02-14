@@ -249,6 +249,21 @@ new Vue({
             }
             return return_array;
         },
+        /**
+         * 最後に置かれた石の位置を返す
+         */
+        getLastPosition: function(value) {
+            let num = 0;
+            if (value) {
+                num = num - value;
+            }
+            let len = this.history.length - num;
+            if (len < 1) {
+                return {y:-1, x:-1};
+            } else {
+                return this.history[len-1];
+            }
+        }
     },
 })
 
